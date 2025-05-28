@@ -11,4 +11,4 @@ Route::get('/user', function (Request $request) {
 
 // +++++++++++ rutas publicas ++++++++++++++ 
 // login
-Route::post('/login', [AuthController::class,'login'])->middleware('throttle:3,0.5');
+Route::post('/login', [AuthController::class,'login'])->middleware('throttle:3,05');

@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:5173'], //url del mi front
+    'allowed_origins' => ['http://localhost:5173'], //url del mi front en producción 
 
     'allowed_origins_patterns' => [],
 
@@ -29,6 +29,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false, //cookies para sesiones / token para sesiones (false)
+    'supports_credentials' => true, //cookies para sesiones / token para sesiones (false)
 
 ];
