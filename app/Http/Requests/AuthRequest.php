@@ -30,9 +30,9 @@ class AuthRequest extends FormRequest
     public function messages()
     {
         return [
-            'userName' => 'El campo Usuario es obligatorio',
+            'userName.required' => 'El campo Usuario es obligatorio',
             'userName.min' => 'El campo Usuario debe ser mayor a 2 caráteres',
-            'password'=>'La contraseña es requerida',
+            'password.required'=>'La contraseña es requerida',
         ];
     }
 }

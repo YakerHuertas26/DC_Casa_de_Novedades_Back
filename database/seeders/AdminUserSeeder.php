@@ -22,6 +22,12 @@ class AdminUserSeeder extends Seeder
             'guard_name'=>'api'
 
         ]);
+        // rol admin 
+        $vendedorRole= Role::create([
+            'name'=>'vendedor',
+            'guard_name'=>'api'
+
+        ]);
 
         // user admin
         $adminUser=User::create([
@@ -32,8 +38,29 @@ class AdminUserSeeder extends Seeder
             'keyWord'=>'casa',
             'state'=>true,
         ]);
+        // user admin
+        $adminUser1=User::create([
+            'name'=>'DC Casa de Novedades',
+            'userName'=>'artur',
+            'email'=>'artur@gmail.com',
+            'password'=>Hash::make(env('ADMIN_PASSWORD')),
+            'keyWord'=>'casa',
+            'state'=>true,
+        ]);
+        // vendedor admin
+        $VendedorUser=User::create([
+            'name'=>'vendedor',
+            'userName'=>'bley',
+            'email'=>'bley@gmail.com',
+            'password'=>Hash::make(env('VENDEDOR_PASSWORD')),
+            'keyWord'=>'vendedor',
+            'state'=>true,
+        ]);
 
         // asigno el rol 
         $adminUser->assignRole($adminRole);
+        $adminUser1->assignRole($adminRole);
+        // asigno el rol 
+        $VendedorUser->assignRole($vendedorRole);
     }
 }
