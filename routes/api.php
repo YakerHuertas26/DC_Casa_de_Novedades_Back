@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -8,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('jwt.cookie')->group(function () {
     // Todas estas rutas requerirán el token JWT en cookies
     Route::post('/logout',[AuthController::class,'logout']);
+    Route::get('/user',[UserController::class,'user']);
 });
 
 

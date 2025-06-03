@@ -40,7 +40,11 @@ class AuthController extends Controller
 
         // devuelvo incluyendo mi coockie
         return response()->json([
-            'user'=> new UserResource($user)
+            'user'=> [
+                    'name'=>$user->name,
+                    'userName'=>$user->userName,
+                    'role'=> $user->getRoleNames()->first(),
+                ]
         ])->withCookie($cookie);
     }
 

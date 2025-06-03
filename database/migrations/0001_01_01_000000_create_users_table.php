@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('keyWord')->comment('palabra para recuperar cuenta');
+            $table->string('keyWord')->nullable()->comment('palabra para recuperar cuenta');
             $table->integer('state')->default(1)->comment('1=activo 0=inactivo');
             $table->rememberToken();
             $table->timestamps();
