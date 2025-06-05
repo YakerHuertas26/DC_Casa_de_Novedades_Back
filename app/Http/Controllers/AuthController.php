@@ -14,27 +14,26 @@ class AuthController extends Controller
     public function login (AuthRequest $request){
         $credentials = $request->validated();
 
-        // si no los datos no existen y ademas solo para usaurios activos
+        // credenciales invalidas y ademas solo para usaurios activos
+        // token explicito
         if (!$token= Auth::guard('api')->attempt(array_merge($credentials, ['state' => 1]))) {
             // notifico el error 
-            throw ValidationException::withMessages([
-                'message' => 'credenciales invalidas',
-            ]);
+            return response()->json(['message'=>'credenciales invalidas'],401);
         }
 
-        // obtengo el user autentificado 
+        // obtengo los datos del usuario   
         $user = Auth::guard('api')->user();
-        // guardo el token en la cookie
 
-        // // cookie de sesion con HttpOnly
+        // guardo el token en la cookie HttpOnly
         $cookie= cookie(
-            'auth_token', // Nombre de la cookie
+            'auth_token', // Nombre de la cookiee
             $token,       // Valor (token)
-            60 * 24 * 1,   // Expira en 7 días (en minutos) // null = hasta cerrar sesión)
+            config('jwt.ttl'),   // Expira en 1 días // null = hasta cerrar sesión)
             '/',          // Ruta (por defecto toda la app)
             null,         // Dominio (null dominio actual) en producción cambia
-            false,        // Secure: Solo HTTPS (cambia a `true` en producción)
+            config('app.env') === 'production', // Secure: Solo HTTPS (cambia a `true` en producción)
             true,         // httpOnly (seguridad contra XSS) no accesible desde JavaScript
+            false,        //cookie no será codificada defaul no mover
             false,        // sameSite (puede ser 'lax' o 'strict' en producción)
         );
 
@@ -50,9 +49,14 @@ class AuthController extends Controller
 
     // cerrar sesion
     public function logout (Request $request){
-        Auth::guard('api')->logout();
+        try {
+            Auth::guard('api')->logout();
 
-        return response()->json(['message' => 'Logged out'])
+            return response()->json(['message' => 'Sessión cerrada'])
         ->cookie('auth_token', '', -1); // Elimina cookie
+        } 
+        catch (\Throwable $th) {
+            return response()->json(['messaje'=>"Error al cerrar sesión"],500);
+        }
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // usuarios autenticados
-Route::middleware('jwt.cookie')->group(function () {
+Route::middleware(['jwt.cookie','jwt.validate'])->group(function () {
     // Todas estas rutas requerirán el token JWT en cookies
     Route::post('/logout',[AuthController::class,'logout']);
     Route::get('/user',[UserController::class,'user']);

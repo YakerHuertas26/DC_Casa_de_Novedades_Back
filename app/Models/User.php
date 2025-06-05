@@ -8,9 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use Tymon\JWTAuth\Contracts\JWTSubject; // Nueva importación
+use Tymon\JWTAuth\Contracts\JWTSubject; 
 
-class User extends Authenticatable implements JWTSubject // Implementación añadida
+class User extends Authenticatable implements JWTSubject 
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles, SoftDeletes, HasApiTokens;

@@ -17,35 +17,13 @@ class JwtFromCookie
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Verificar si existe la cookie
-        if (!$request->hasCookie('auth_token')) {
-            return response()->json(['message' => 'Token no proporcionado'], 401);
-        }
-        // Obtener el token de la cookie
-        $token = $request->cookie('auth_token');
-        
-        try {
-            // Establecer el token tanto en headers como en JWTAuth
-            $request->headers->set('Authorization', 'Bearer ' . $token);
-            JWTAuth::setToken($token);
-            
-            // Autenticar y obtener usuario
-            $user = JWTAuth::authenticate();
-            
-            if (!$user) {
-                throw new JWTException('Usuario no encontrado');
+        // quita el token de la cookie y pasa al header del HTTP
+            // verifi si exite la cookie
+            if ($request->hasCookie('auth_token')) {
+                $request->headers->set('Authorization','bearer'.$request->cookie('auth_token'));
             }
-            
-            // Inyectar el usuario en el request para acceso fácil
-            $request->merge(['user' => $user]);
-            
-        } catch (JWTException $e) {
-            return response()->json([
-                'message' => 'No autorizado',
-                'error' => $e->getMessage()
-            ], 401);
-        }
-
-        return $next($request);
+            return $next($request);
     }
 }
+
+// 
